@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tasks</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<header>
+  <h1>Task List</h1>
+  <a href="/tasks/form">Add New Task</a>
+  <form action="/tasks/search" method="get">
+    <input type="text" name="search" placeholder="Search tasks...">
+    <button type="submit">Search</button>
+  </form>
+</header>
+<main>
+  <table>
+    <thead>
+    <tr>
+      <th>Title</th>
+      <th>Category</th>
+      <th>Date</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Здесь будет отображаться список задач -->
+    <tr>
+      <td>Sample Task</td>
+      <td>Sample Category</td>
+      <td>2024-11-08</td>
+      <td>Pending</td>
+      <td>
+        <a href="/tasks/edit/1">Edit</a> |
+        <a href="/tasks/delete/1">Delete</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <nav>
+    <a href="?page=1">1</a>
+    <a href="?page=2">2</a>
+    <!-- пагинация -->
+  </nav>
+</main>
+</body>
+</html>

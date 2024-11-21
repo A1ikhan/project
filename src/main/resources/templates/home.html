@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+<h2>Welcome, <span th:text="${user.username}">Username</span>!</h2>
+<h3>Your Tasks</h3>
+
+<table>
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Date</th>
+        <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="task : ${tasks}">
+        <td th:text="${task.title}">Sample Title</td>
+        <td th:text="${task.t_date}">Sample Date</td>
+        <td th:text="${task.status}">Sample Status</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

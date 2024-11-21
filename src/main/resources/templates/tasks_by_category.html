@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Tasks by Category</title>
+</head>
+<body>
+<h2>Tasks for Category</h2>
+<table border="1">
+  <tr>
+    <th>Title</th>
+    <th>Date</th>
+    <th>Status</th>
+    <th>User</th>
+  </tr>
+  <tr th:each="task : ${tasks}">
+    <td th:text="${task.title}"></td>
+    <td th:text="${task.tDate}"></td>
+    <td th:text="${task.status}"></td>
+    <td th:text="${task.user.username}"></td>
+  </tr>
+</table>
+</body>
+</html>

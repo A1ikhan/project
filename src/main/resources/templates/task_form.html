@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Form</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<header>
+  <h1>Task Form</h1>
+  <a href="/tasks">Back to Task List</a>
+</header>
+<main>
+  <form action="#" method="post">
+    <label for="title">Task Title:</label>
+    <input type="text" id="title" name="title" required>
+
+    <label for="category">Category:</label>
+    <select id="category" name="category_id">
+      <option value="1">Sample Category</option>
+      <!-- Здесь будут динамически подставляться категории -->
+    </select>
+
+    <label for="date">Date:</label>
+    <input type="date" id="date" name="t_date" required>
+
+    <label for="status">Status:</label>
+    <select id="status" name="status">
+      <option value="Pending">Pending</option>
+      <option value="Completed">Completed</option>
+    </select>
+
+    <button type="submit">Save Task</button>
+  </form>
+</main>
+</body>
+</html>
