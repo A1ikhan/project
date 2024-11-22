@@ -1,35 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Task Form</title>
-  <link rel="stylesheet" href="/css/styles.css">
+  <title>Add Task</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 <header>
-  <h1>Task Form</h1>
-  <a href="/tasks">Back to Task List</a>
+  <h1>Add New Task</h1>
+  <a href="/tasks/all">Back to Task List</a>
 </header>
+
 <main>
-  <form action="#" method="post">
-    <label for="title">Task Title:</label>
+  <form action="/tasks/add" method="post">
+    <label for="title">Task Title</label>
     <input type="text" id="title" name="title" required>
 
-    <label for="category">Category:</label>
-    <select id="category" name="category_id">
-      <option value="1">Sample Category</option>
-      <!-- Здесь будут динамически подставляться категории -->
+    <label for="category">Category</label>
+    <select id="category" name="category" required>
+      <!-- Categories should be dynamically populated from the backend -->
+      <option value="1">Work</option>
+      <option value="2">Personal</option>
     </select>
 
-    <label for="date">Date:</label>
-    <input type="date" id="date" name="t_date" required>
-
-    <label for="status">Status:</label>
-    <select id="status" name="status">
+    <label for="status">Status</label>
+    <select id="status" name="status" required>
       <option value="Pending">Pending</option>
       <option value="Completed">Completed</option>
     </select>
+
+    <label for="dueDate">Due Date</label>
+    <input type="date" id="dueDate" name="dueDate" required>
 
     <button type="submit">Save Task</button>
   </form>

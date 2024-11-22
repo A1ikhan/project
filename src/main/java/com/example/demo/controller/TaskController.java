@@ -35,6 +35,7 @@ public class TaskController {
         return "redirect:/tasks/all";
     }
 
+
     @GetMapping("/all")
     public String showAllTasks(Model model) {
         model.addAttribute("tasks", taskService.getAllTasks());

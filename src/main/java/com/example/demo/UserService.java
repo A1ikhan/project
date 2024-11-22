@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,7 +25,7 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
-    public List<User> getAllUsers() {
+    public  List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
