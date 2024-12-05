@@ -14,25 +14,27 @@
 </header>
 
 <main>
-  <form action="/tasks/add" method="post">
+  <form action="/tasks/add" method="post" th:object="${task}">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
     <label for="title">Task Title</label>
-    <input type="text" id="title" name="title" required>
+    <input type="text" id="title" name="title" th:field="*{title}" required>
 
     <label for="category">Category</label>
-    <select id="category" name="category" required>
-      <!-- Categories should be dynamically populated from the backend -->
-      <option value="1">Work</option>
-      <option value="2">Personal</option>
+    <select id="category" name="category" th:field="*{category}" required>
+      <option th:each="category : ${categories}"
+              th:value="${category.categoryId}"
+              th:text="${category.name}">
+      </option>
     </select>
 
     <label for="status">Status</label>
-    <select id="status" name="status" required>
+    <select id="status" name="status" th:field="*{status}" required>
       <option value="Pending">Pending</option>
       <option value="Completed">Completed</option>
     </select>
 
-    <label for="dueDate">Due Date</label>
-    <input type="date" id="dueDate" name="dueDate" required>
+    <label for="tDate">Due Date</label>
+    <input type="date" id="tDate" name="tDate" th:field="*{tDate}" required>
 
     <button type="submit">Save Task</button>
   </form>

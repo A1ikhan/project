@@ -9,15 +9,16 @@
 <body>
 <header>
   <h1>Category Form</h1>
-  <a href="/categories">Back to Categories</a>
+  <a href="/categories/all">Back to Categories</a>
 </header>
 <main>
-  <form action="#" method="post">
+  <form action="/categories/add" method="post" th:object="${category}">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
     <label for="name">Category Name:</label>
-    <input type="text" id="name" name="name" required>
+    <input type="text" id="name" name="name" th:field="*{name}" required>
 
     <label for="description">Description:</label>
-    <textarea id="description" name="description" required></textarea>
+    <textarea id="description" name="description" th:field="*{description}" required></textarea>
 
     <button type="submit">Save Category</button>
   </form>

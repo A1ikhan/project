@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,13 +10,34 @@
 <header>
   <h1>Task List</h1>
   <a href="/tasks/add">Add New Task</a>
+
+  <!-- Форма фильтрации -->
+  <form action="/tasks/filter" method="get">
+    <select name="categoryId">
+      <option value="">All Categories</option>
+      <option th:each="category : ${categories}"
+              th:value="${category.categoryId}"
+              th:text="${category.name}"
+              th:selected="${selectedCategory == category.categoryId}">
+      </option>
+    </select>
+    <select name="status">
+      <option value="">All Statuses</option>
+      <option value="Pending" th:selected="${selectedStatus == 'Pending'}">Pending</option>
+      <option value="Completed" th:selected="${selectedStatus == 'Completed'}">Completed</option>
+    </select>
+    <button type="submit">Filter</button>
+  </form>
+
+  <!-- Поиск -->
   <form action="/tasks/search" method="get">
-    <input type="text" name="search" placeholder="Search tasks...">
+    <input type="text" name="search" th:value="${searchQuery}" placeholder="Search tasks...">
     <button type="submit">Search</button>
   </form>
 </header>
 
 <main>
+  <!-- Таблица задач -->
   <table>
     <thead>
     <tr>
@@ -29,24 +49,33 @@
     </tr>
     </thead>
     <tbody>
-    <!-- Here, dynamic task data will be injected -->
-    <tr>
-      <td>Sample Task</td>
-      <td>Sample Category</td>
-      <td>2024-11-08</td>
-      <td>Pending</td>
+    <tr th:each="task : ${tasks}">
+      <td th:text="${task.title}"></td>
+      <td th:text="${task.category.name}"></td>
+      <td th:text="${task.tDate}"></td>
+      <td th:text="${task.status}"></td>
       <td>
-        <a href="/tasks/edit/1">Edit</a> |
-        <a href="/tasks/delete/1">Delete</a>
+        <a th:href="@{/tasks/edit/{id}(id=${task.taskId})}">Edit</a> |
+        <a th:href="@{/tasks/delete/{id}(id=${task.taskId})}">Delete</a>
       </td>
     </tr>
     </tbody>
   </table>
 
-  <nav class="pagination">
-    <a href="?page=1">1</a>
-    <a href="?page=2">2</a>
-    <!-- Pagination links go here -->
+  <!-- Пагинация -->
+  <nav>
+    <ul>
+      <li th:if="${currentPage > 0}">
+        <a th:href="@{/tasks/all(page=${currentPage - 1})}">Previous</a>
+      </li>
+      <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+        <a th:href="@{/tasks/all(page=${i})}" th:text="${i + 1}"
+           th:classappend="${i == currentPage} ? 'active'"></a>
+      </li>
+      <li th:if="${currentPage < totalPages - 1}">
+        <a th:href="@{/tasks/all(page=${currentPage + 1})}">Next</a>
+      </li>
+    </ul>
   </nav>
 </main>
 </body>

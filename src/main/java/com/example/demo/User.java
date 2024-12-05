@@ -2,12 +2,16 @@ package com.example.demo;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Task> tasks;
 
     private String username;
     private String password;
@@ -21,6 +25,8 @@ public class User {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+    public void setTasks(List<Task> tasks) {}
+    public List<Task> getTasks() {return tasks;}
 
     public String getUsername() {
         return username;

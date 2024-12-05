@@ -24,6 +24,7 @@ public class CategoryController {
     @PostMapping("/add")
     public String addCategory(@ModelAttribute Category category) {
         categoryService.saveCategory(category);
+        System.out.println("Saving category: " + category);
         return "redirect:/categories/all";
     }
 

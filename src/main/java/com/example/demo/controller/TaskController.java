@@ -4,9 +4,12 @@ import com.example.demo.CategoryService;
 import com.example.demo.Task;
 import com.example.demo.TaskService;
 import com.example.demo.UserService;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/tasks")
@@ -36,10 +39,16 @@ public class TaskController {
     }
 
 
+
     @GetMapping("/all")
-    public String showAllTasks(Model model) {
-        model.addAttribute("tasks", taskService.getAllTasks());
-        return "tasks"; // шаблон для отображения списка задач
+    public String showAllTasks(@RequestParam(defaultValue = "0") int page,
+                               @RequestParam(defaultValue = "5") int size,
+                               Model model) {
+        Page<Task> tasksPage = taskService.getTasks(page, size);
+        model.addAttribute("tasks", tasksPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", tasksPage.getTotalPages());
+        return "tasks";
     }
 
     @GetMapping("/user/{userId}")
@@ -59,7 +68,32 @@ public class TaskController {
         taskService.deleteTaskById(taskId);
         return "redirect:/tasks/all";
     }
-
-
+    @GetMapping("/search")
+    public String searchTasks(@RequestParam("search") String query,
+                              @RequestParam(defaultValue = "0") int page,
+                              @RequestParam(defaultValue = "5") int size,
+                              Model model) {
+        Page<Task> tasksPage = taskService.searchTasks(query, page, size);
+        model.addAttribute("tasks", tasksPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", tasksPage.getTotalPages());
+        model.addAttribute("searchQuery", query);
+        return "tasks";
+    }
+    @GetMapping("/filter")
+    public String filterTasks(@RequestParam(required = false) Long categoryId,
+                              @RequestParam(required = false) String status,
+                              @RequestParam(defaultValue = "0") int page,
+                              @RequestParam(defaultValue = "5") int size,
+                              Model model) {
+        Page<Task> tasksPage = taskService.filterTasks(categoryId, status, page, size);
+        model.addAttribute("tasks", tasksPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", tasksPage.getTotalPages());
+        model.addAttribute("selectedCategory", categoryId);
+        model.addAttribute("selectedStatus", status);
+        model.addAttribute("categories", categoryService.getAllCategories()); // Для выбора категории
+        return "tasks";
+    }
 
 }

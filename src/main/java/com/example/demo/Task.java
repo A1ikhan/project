@@ -18,6 +18,7 @@ public class Task {
     private Category category;
 
     private String title;
+    @Column(name = "t_Date")
     private LocalDate tDate;
     private String status;
 
