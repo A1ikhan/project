@@ -16,6 +16,7 @@ public class User {
     private String username;
     private String password;
     private String email;
+    private String photopath;
 
     // Getters and Setters
     public Long getUserId() {
@@ -50,5 +51,12 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+    public String getPhotopath() {
+        return photopath;
+    }
+
+    public void setPhotopath(String photopath) {
+        this.photopath = photopath;
     }
 }

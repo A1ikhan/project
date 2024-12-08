@@ -6,11 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/users")
@@ -62,4 +61,41 @@ public class UserController {
         return "redirect:/users/all";
     }
 
+//    @GetMapping("/detail")
+//    public String getUserDetail(Model model) {
+//        Long userId = getCurrentUserId(); // Реализуйте метод для получения текущего пользователя
+//        User user = userService.getUserById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+//        model.addAttribute("user", user);
+//        return "user_detail"; // шаблон для отображения
+//    }
+
+    @PostMapping("/update")
+    public String updateUserProfile(@ModelAttribute User user) {
+        userService.updateUser(user);
+        return "redirect:/users/{id}";
+    }
+
+    @PostMapping("/upload-photo")
+    public String uploadPhoto(@RequestParam("photo") MultipartFile photo) {
+        Long userId = getCurrentUserId(); // Получение текущего пользователя
+        userService.uploadPhoto(userId, photo);
+        return "redirect:/users/{id}";
+    }
+
+    @PostMapping("/change-password")
+    public String changePassword(@RequestParam("current_password") String currentPassword,
+                                 @RequestParam("new_password") String newPassword) {
+        Long userId = getCurrentUserId();
+        boolean isChanged = userService.changePassword(userId, currentPassword, newPassword);
+        if (isChanged) {
+            return "redirect:/users/{id}";
+        } else {
+            return "redirect:/users/{id}?error=password";
+        }
+    }
+
+    private Long getCurrentUserId() {
+        // Замените на логику для получения ID текущего пользователя (например, из Spring Security)
+        return 1L;
+    }
 }

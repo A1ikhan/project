@@ -5,6 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tasks</title>
   <link rel="stylesheet" th:href="@{/css/style.css}">
+
+  <script>
+    let idleTime = 0;
+
+    // Обновление таймера активности
+    function resetIdleTime() {
+      idleTime = 0;
+    }
+
+    // Увеличиваем время бездействия каждые секунду
+    setInterval(() => {
+      idleTime++;
+      if (idleTime >= 15) { // 15 секунд
+        alert("Сеанс завершен из-за неактивности");
+        window.location.href = "/logout"; // URL для выхода из системы
+      }
+    }, 1000);
+
+    // Сбрасываем таймер на действия пользователя
+    document.onmousemove = resetIdleTime;
+    document.onkeydown = resetIdleTime;
+  </script>
+
 </head>
 <body>
 <header>

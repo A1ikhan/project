@@ -38,8 +38,6 @@ public class TaskController {
         return "redirect:/tasks/all";
     }
 
-
-
     @GetMapping("/all")
     public String showAllTasks(@RequestParam(defaultValue = "0") int page,
                                @RequestParam(defaultValue = "5") int size,
@@ -68,6 +66,7 @@ public class TaskController {
         taskService.deleteTaskById(taskId);
         return "redirect:/tasks/all";
     }
+
     @GetMapping("/search")
     public String searchTasks(@RequestParam("search") String query,
                               @RequestParam(defaultValue = "0") int page,
